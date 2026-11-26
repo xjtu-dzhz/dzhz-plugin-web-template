@@ -1,0 +1,62 @@
+name: Build plugin package
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '版本号（例如 1.0.0）；填了才会发到 Release'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 准备签名私钥
+        env:
+          SIGNING_KEY: ${{ secrets.PLUGIN_SIGNING_KEY }}
+        run: |
+          mkdir -p signing
+          if [ -n "$SIGNING_KEY" ]; then
+            printf '%s\n' "$SIGNING_KEY" > signing/plugin-ec.pem
+            echo "用仓库 Secret PLUGIN_SIGNING_KEY 里的私钥签名"
+          else
+            echo "::warning::没有配 PLUGIN_SIGNING_KEY，这次用临时密钥；产物只适合自己试，别当正式包发"
+          fi
+
+      - name: 打包
+        id: pack
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.version }}" ]; then ARGS="-v ${{ inputs.version }}"; fi
+          python3 package.py $ARGS -o dist/plugin.zip
+          VER=$(python3 -c "import json;print(json.load(open('plugin.manifest.json'))['version'])")
+          echo "version=$VER" >> "$GITHUB_OUTPUT"
+          echo "产物版本：$VER"
+
+      - name: 上传 Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-package-${{ steps.pack.outputs.version }}
+          path: dist/*.zip
+          if-no-files-found: error
+
+      - name: 发到 Release（手动触发且填了版本才发）
+        if: github.event_name == 'workflow_dispatch' && inputs.version != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ inputs.version }}
+          name: v${{ inputs.version }}
+          body: |
+            web 插件包 v${{ inputs.version }}，由 GitHub Actions 构建。
+
+            装法：盒子 →「插件」→ 右上角设置 →「从文件安装」，选下载下来的 zip。
+          files: dist/*.zip

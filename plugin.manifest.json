@@ -1,0 +1,24 @@
+{
+  "manifestVersion": 1,
+  "id": "top.dzhz.plugin.webdemo",
+  "name": "网页插件",
+  "summary": "用盒子内置浏览器打开一个网页；可以走 WebVPN，也可以限定只允许停在声明的站点里",
+  "version": "0.1.0",
+  "versionCode": 1,
+  "minAppVersionCode": 101,
+  "author": {
+    "name": "你的名字",
+    "url": "https://github.com/your-name"
+  },
+  "projectUrl": "",
+  "type": "web",
+  "web": {
+    "startUrl": "https://ehall.xjtu.edu.cn/",
+    "origins": ["https://ehall.xjtu.edu.cn"],
+    "allowSubdomains": true,
+    "capabilities": ["theme"],
+    "vpn": "optional_on"
+  },
+  "files": [],
+  "pubkey": ""
+}
