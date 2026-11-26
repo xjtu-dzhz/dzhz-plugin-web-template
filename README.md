@@ -85,3 +85,7 @@ python3 package.py            # 生成 <id>-<version>.zip
 ## 注意
 
 web 插件不跑代码，只加载网页，所以风险比 dex 插件小；但它仍然能通过登录态访问校内账号信息——只装你信任来源的插件。
+
+## 许可证
+
+[GPL-3.0](./LICENSE)，和盒子本体 [yeliqin666/xjtu-toolbox-android](https://github.com/yeliqin666/xjtu-toolbox-android) 一致。
