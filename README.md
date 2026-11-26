@@ -88,4 +88,4 @@ web 插件不跑代码，只加载网页，所以风险比 dex 插件小；但�
 
 ## 许可证
 
-[GPL-3.0](./LICENSE)，和盒子本体 [yeliqin666/xjtu-toolbox-android](https://github.com/yeliqin666/xjtu-toolbox-android) 一致。
+[GPL-3.0](./LICENSE)，和盒子本体 [xjtu-dzhz/dzhz](https://github.com/xjtu-dzhz/dzhz) 一致。
