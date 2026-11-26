@@ -6,6 +6,8 @@ web 插件不是一个 App：它就是一个 zip 包，里面声明「用盒子�
 
 > 这个仓库是 GitHub **模板仓库**，点右上角 "Use this template" 复制一份就能开始改。
 
+网页插件用于打开页面。需要给小岱提供 Android 插件工具时，可使用 [DEX 插件模板](https://github.com/xjtu-dzhz/dzhz-plugin-template)。独立部署的工具可通过[小岱的 MCP 设置](https://github.com/xjtu-dzhz/dzhz/blob/dev/docs/agent.md#mcp)接入。
+
 ## 三步
 
 **1. 改身份**
